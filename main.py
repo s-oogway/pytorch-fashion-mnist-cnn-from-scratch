@@ -39,7 +39,7 @@ def load_fashion_mnist_data(batch_size=64):
         transform=transform
     )
 
-    num_workers = os.cpu_count() - 1 if os.cpu_count > 1 else 0
+    num_workers = os.cpu_count() - 1 if os.cpu_count() > 1 else 0
     if num_workers > 4:
         num_workers = 4
     print(f"Using {num_workers} cpu cores")
