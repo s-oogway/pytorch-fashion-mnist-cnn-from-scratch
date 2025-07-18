@@ -61,3 +61,22 @@ def load_fashion_mnist_data(batch_size=64):
     )
 
     return train_loader, test_loader, device
+
+def main():
+    """
+    Main function to (do initial data loading test)
+    """
+    print("Starting data loading test...")
+    train_loader, test_loader, device = load_fashion_mnist_data()
+    images, labels = next(iter(train_loader))
+
+    print(f"\nShape of one batch of images: {images.shape}")
+    print(f"Shape of one batch of labels: {labels.shape}")
+    print(f"Device of batch images: {images.device}")
+    print(f"Device of batch labels: {labels.device}")
+    
+    print("Data loading test complete")
+
+
+if __name__ == '__main__':
+    main()
