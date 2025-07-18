@@ -23,7 +23,7 @@ def load_fashion_mnist_data(batch_size=64):
     if device.type == 'cuda':
         print(f"GPU Name : {torch.cuda.get_device_name(0)}")
 
-    transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5), (0.5))])
+    transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
     
     train_dataset = torchvision.datasets.FashionMNIST(
         root='./data',
@@ -39,9 +39,9 @@ def load_fashion_mnist_data(batch_size=64):
         transform=transform
     )
 
-    num_workers = os.cpu_count - 1 if os.cpu_count > 1 else 0
+    num_workers = os.cpu_count() - 1 if os.cpu_count > 1 else 0
     if num_workers > 4:
-        num_workers == 4
+        num_workers = 4
     print(f"Using {num_workers} cpu cores")
 
     train_loader = DataLoader(
