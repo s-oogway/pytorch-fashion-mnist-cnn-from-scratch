@@ -41,6 +41,7 @@ class CNNModel(nn.Module):
         x = F.relu(x)
         x = F.max_pool2d(x, kernel_size=2, stride=2)
 
+        #Flatten feature maps for linear layers
         x = torch.flatten(x, 1)
 
         #Apply fully connected layers
