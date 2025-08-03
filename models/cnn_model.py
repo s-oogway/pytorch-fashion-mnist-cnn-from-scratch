@@ -30,21 +30,22 @@ class CNNModel(nn.Module):
 
     def forward(self, x):
         # Input 'x' shape: [batch_size, 1, 28, 28]
-        #Structure of conv blocks: CNN layer -> ReLU -> Maxpool
+        #Structure of conv blocks: Conv2d -> ReLU -> Maxpool
         #Apply first conv block
         x = self.conv1(x)
-        x = F.ReLU(x)
+        x = F.relu(x)
         x = F.max_pool2d(x, kernel_size=2, stride=2)
 
         #Apply second conv block 
         x = self.conv2(x)
-        x = F.ReLU(x)
+        x = F.relu(x)
         x = F.max_pool2d(x, kernel_size=2, stride=2)
 
         x = torch.flatten(x, 1)
 
         #Apply fully connected layers
         x = self.fc1(x)
+        x = F.relu(x)
         x = self.fc2(x)
 
         return x
