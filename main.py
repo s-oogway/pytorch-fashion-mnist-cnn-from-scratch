@@ -74,7 +74,29 @@ def train_model(model, train_loader, criterion, optimizer, device):
         optimizer: The optimizer that will be used
         device: The device the model will be trained on
     """
-    pass
+    model.train()
+    
+    for images, labels in train_loader:
+        # Move inputs and labels to the right device
+        images = images.to(device)
+        labels = labels.to(device)
+        
+        # 1. Forward pass
+        outputs = model(images)
+        
+        # 2. Calculate the loss
+        loss = criterion(outputs, labels)
+        
+        # 3. Backward pass
+        loss.backward()
+        
+        # 4. Update the weights
+        optimizer.step()
+        
+        # 5. Zero the gradients
+        optimizer.zero_grad()
+    
+    return loss.item() # Return the loss for the last batch
 
 def main():
     """
@@ -90,9 +112,16 @@ def main():
     print(model)
 
     # Pass the batch through the model
-    # Ensure the images tensor is on the same device as the model
     outputs = model(images.to(device))
     print(f"\nModel output shape: {outputs.shape}")
+    
+    # Define loss function and optimizer
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.SGD(model.parameters(), lr=0.01)
+    
+    # Run a single epoch of training
+    train_loss = train_model(model, train_loader, criterion, optimizer, device)
+    print(f"\nTrain Loss: {train_loss:.4f}")
 
 if __name__ == '__main__':
     main()
